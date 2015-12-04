@@ -16,6 +16,8 @@ public class FoodEditActivity extends AppCompatActivity {
     private Integer food_id = null;
     private EditText priceInput;
 
+    public final static String PARAM_FOOD_ID = "FoodEditActivity.PARAM_FOOD_ID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,14 +27,18 @@ public class FoodEditActivity extends AppCompatActivity {
 
         priceInput = (EditText) findViewById(R.id.maxPriceInput);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Intent intent = getIntent();
+        if (intent.hasExtra(PARAM_FOOD_ID))
+            food_id = intent.getIntExtra(PARAM_FOOD_ID, 0);
+
+        FloatingActionButton fab_save = (FloatingActionButton) findViewById(R.id.fab_save);
+        FloatingActionButton fab_del = (FloatingActionButton) findViewById(R.id.fab_del);
+        fab_save.setOnClickListener(new SaveAction());
+        fab_del.setOnClickListener(new DeleteAction());
+        if (food_id == null) {
+            fab_del.setVisibility(View.GONE);
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -49,6 +55,21 @@ public class FoodEditActivity extends AppCompatActivity {
             } else {
                 food.setId(food_id);
                 foodHelper.updateFoodModel(food);
+            }
+
+            Intent intent = new Intent(FoodEditActivity.this, CurrentListActivity.class);
+            FoodEditActivity.this.startActivity(intent);
+        }
+    }
+
+    class DeleteAction implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            FoodHelper foodHelper = new FoodHelper(FoodEditActivity.this);
+
+            if (food_id != null) {
+                foodHelper.deleteFood(food_id);
             }
 
             Intent intent = new Intent(FoodEditActivity.this, CurrentListActivity.class);
