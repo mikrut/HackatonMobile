@@ -112,4 +112,14 @@ public class FoodHelper {
             return null;
         }
     }
+
+    public void updateFoodModel(FoodModel food) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String selection = FoodEntry._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(food.getId()) };
+
+        ContentValues cv = new ContentValues();
+        cv.put(FoodEntry.COLUMN_NAME_MAX_PRICE, food.getMaxPrice());
+        db.update(FoodEntry.TABLE_NAME, cv, selection, selectionArgs);
+    }
 }

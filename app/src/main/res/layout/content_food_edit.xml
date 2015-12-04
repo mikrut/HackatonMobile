@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/maxPriceInput"
         android:layout_marginTop="55dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true" />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Предел цены"
-        android:id="@+id/maxPriceInput"
+        android:id="@+id/editText"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
         android:layout_marginTop="31dp" />
