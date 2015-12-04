@@ -56,11 +56,11 @@ public class FoodEditActivity extends AppCompatActivity {
             FoodHelper foodHelper = new FoodHelper(FoodEditActivity.this);
             food.setMaxPrice(Short.valueOf(priceInput.getText().toString()));
 
-            food.setMinH(fromInput.getHour());
-            food.setMinM(fromInput.getMinute());
+            food.setMinH(fromInput.getCurrentHour());
+            food.setMinM(fromInput.getCurrentMinute());
 
-            food.setMaxH(toInput.getHour());
-            food.setMaxM(toInput.getMinute());
+            food.setMaxH(toInput.getCurrentHour());
+            food.setMaxM(toInput.getCurrentMinute());
 
             if (food_id == null) {
                 foodHelper.saveModel(food);

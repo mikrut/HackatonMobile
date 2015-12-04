@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="stations_array">
+        <item>Авиамоторная</item>
+        <item>Бауманская</item>
+        <item>Измайловская</item>
+        <item>Курская</item>
+    </string-array>
+</resources>
