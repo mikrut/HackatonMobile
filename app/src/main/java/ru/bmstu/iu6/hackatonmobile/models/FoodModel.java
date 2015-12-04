@@ -15,7 +15,7 @@ import ru.bmstu.iu6.hackatonmobile.database.FoodReaderContract.FoodEntry;
 /**
  * Created by mikrut on 04.12.15.
  */
-public class FoodModel {
+public class FoodModel implements DBModel {
     private short maxPrice;
     private int id;
     private GregorianCalendar updatedTime;

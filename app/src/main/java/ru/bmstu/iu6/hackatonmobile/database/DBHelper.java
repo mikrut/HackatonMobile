@@ -22,10 +22,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(FoodHelper.CREATE_TABLE);
+        db.execSQL(MetroHelper.CREATE_TABLE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(FoodHelper.SQL_DELETE_ENTRIES);
+        db.execSQL(MetroHelper.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
