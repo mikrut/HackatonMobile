@@ -63,10 +63,10 @@ public class FoodEditActivity extends AppCompatActivity {
             food.setMaxM(toInput.getMinute());
 
             if (food_id == null) {
-                foodHelper.saveFoodRecord(food);
+                foodHelper.saveModel(food);
             } else {
                 food.setId(food_id);
-                foodHelper.updateFoodModel(food);
+                foodHelper.updateModel(food);
             }
 
             Intent intent = new Intent(FoodEditActivity.this, CurrentListActivity.class);
@@ -81,7 +81,7 @@ public class FoodEditActivity extends AppCompatActivity {
             FoodHelper foodHelper = new FoodHelper(FoodEditActivity.this);
 
             if (food_id != null) {
-                foodHelper.deleteFood(food_id);
+                foodHelper.deleteModel(food_id);
             }
 
             Intent intent = new Intent(FoodEditActivity.this, CurrentListActivity.class);

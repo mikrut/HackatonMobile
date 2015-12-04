@@ -43,7 +43,7 @@ public abstract class TableHelper<Model extends DBModel> {
         );
     }
 
-    public long saveRecord(@NonNull Model model) {
+    public long saveModel(@NonNull Model model) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         GregorianCalendar now = new GregorianCalendar();
