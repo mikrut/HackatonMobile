@@ -8,13 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import ru.bmstu.iu6.hackatonmobile.database.FoodHelper;
 import ru.bmstu.iu6.hackatonmobile.models.FoodModel;
 
 public class FoodEditActivity extends AppCompatActivity {
     private Integer food_id = null;
+
     private EditText priceInput;
+    private TimePicker fromInput;
+    private TimePicker toInput;
 
     public final static String PARAM_FOOD_ID = "FoodEditActivity.PARAM_FOOD_ID";
 
@@ -26,6 +30,8 @@ public class FoodEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         priceInput = (EditText) findViewById(R.id.maxPriceInput);
+        fromInput = (TimePicker) findViewById(R.id.timePickerFrom);
+        toInput = (TimePicker) findViewById(R.id.timePickerTo);
 
         Intent intent = getIntent();
         if (intent.hasExtra(PARAM_FOOD_ID))
@@ -49,6 +55,12 @@ public class FoodEditActivity extends AppCompatActivity {
             FoodModel food = new FoodModel();
             FoodHelper foodHelper = new FoodHelper(FoodEditActivity.this);
             food.setMaxPrice(Short.valueOf(priceInput.getText().toString()));
+
+            food.setMinH(fromInput.getHour());
+            food.setMinM(fromInput.getMinute());
+
+            food.setMaxH(toInput.getHour());
+            food.setMaxM(toInput.getMinute());
 
             if (food_id == null) {
                 foodHelper.saveFoodRecord(food);

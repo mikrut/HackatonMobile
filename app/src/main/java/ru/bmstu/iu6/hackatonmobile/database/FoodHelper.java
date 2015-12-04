@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 /**
  * Created by mikrut on 04.12.15.
@@ -20,19 +21,37 @@ public class FoodHelper {
     private final static String COMMA_SEP = ",";
     final static String CREATE_TABLE =
             "CREATE TABLE " + FoodEntry.TABLE_NAME + "(" +
-            FoodEntry._ID + " INTEGER PRIMARY KEY," +
-            FoodEntry.COLUMN_NAME_MAX_PRICE + " SMALLINT NOT NULL";
+            FoodEntry._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_MAX_PRICE + " SMALLINT NOT NULL" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_MAX_TIME_H + " INTEGER NOT NULL" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_MAX_TIME_M + " INTEGER NOT NULL" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_MIN_TIME_H + " INTEGER NOT NULL" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_MIN_TIME_M + " INTEGER NOT NULL" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_FOUND + " DATETIME" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_UPDATED + " DATETIME";
 
     final static String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FoodEntry.TABLE_NAME;
 
     final static String[] FOOD_PROJECTION = {
             FoodEntry._ID,
-            FoodEntry.COLUMN_NAME_MAX_PRICE
+            FoodEntry.COLUMN_NAME_MAX_PRICE,
+            FoodEntry.COLUMN_NAME_MAX_TIME_M,
+            FoodEntry.COLUMN_NAME_MAX_TIME_M,
+            FoodEntry.COLUMN_NAME_MIN_TIME_H,
+            FoodEntry.COLUMN_NAME_MIN_TIME_M,
+            FoodEntry.COLUMN_NAME_FOUND,
+            FoodEntry.COLUMN_NAME_UPDATED
     };
 
-    static final int PROJECTION_ID_INDEX = 0;
-    static final int PROJECTION_MAX_PRICE_INDEX = 1;
+    public static final int PROJECTION_ID_INDEX = 0;
+    public static final int PROJECTION_MAX_PRICE_INDEX = 1;
+    public static final int PROJECTION_MAX_TIME_H_INDEX = 2;
+    public static final int PROJECTION_MAX_TIME_M_INDEX = 3;
+    public static final int PROJECTION_MIN_TIME_H_INDEX = 4;
+    public static final int PROJECTION_MIN_TIME_M_INDEX = 5;
+    public static final int PROJECTION_FOUND_INDEX = 6;
+    public static final int PROJECTION_UPDATED_INDEX = 7;
 
     private DBHelper dbHelper;
 
@@ -71,8 +90,7 @@ public class FoodHelper {
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             FoodModel food = new FoodModel();
-            food.setMaxPrice(cursor.getShort(PROJECTION_MAX_PRICE_INDEX));
-            food.setId(cursor.getInt(PROJECTION_ID_INDEX));
+            food.setValues(cursor);
             foods.add(food);
         }
 
@@ -105,8 +123,7 @@ public class FoodHelper {
         if (c.getCount() > 0) {
             c.moveToFirst();
             FoodModel food = new FoodModel();
-            food.setId(c.getInt(PROJECTION_ID_INDEX));
-            food.setMaxPrice(c.getShort(PROJECTION_MAX_PRICE_INDEX));
+            food.setValues(c);
             return food;
         } else {
             return null;
@@ -118,8 +135,11 @@ public class FoodHelper {
         String selection = FoodEntry._ID + " = ?";
         String[] selectionArgs = { String.valueOf(food.getId()) };
 
-        ContentValues cv = new ContentValues();
-        cv.put(FoodEntry.COLUMN_NAME_MAX_PRICE, food.getMaxPrice());
+
+        GregorianCalendar now = new GregorianCalendar();
+        food.setUpdatedTime(now);
+
+        ContentValues cv = food.getValues();
         db.update(FoodEntry.TABLE_NAME, cv, selection, selectionArgs);
     }
 }
