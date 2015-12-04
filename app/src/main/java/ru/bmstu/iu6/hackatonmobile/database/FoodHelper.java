@@ -9,6 +9,7 @@ import ru.bmstu.iu6.hackatonmobile.database.FoodReaderContract.FoodEntry;
 import ru.bmstu.iu6.hackatonmobile.models.FoodModel;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -84,5 +85,31 @@ public class FoodHelper {
         String selection = FoodEntry._ID + " = ?";
         String[] selectionArgs = { String.valueOf(id) };
         db.delete(FoodEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
+    @Nullable
+    public FoodModel findFoodModel(int id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selection = FoodEntry._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+        Cursor c = db.query (
+                FoodEntry.TABLE_NAME,
+                FOOD_PROJECTION,
+                selection,
+                selectionArgs, // WHERE
+                null, // GROUP BY
+                null, // Filter groups
+                null, // Sort order
+                "1" // Limit 1
+        );
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            FoodModel food = new FoodModel();
+            food.setId(c.getInt(PROJECTION_ID_INDEX));
+            food.setMaxPrice(c.getShort(PROJECTION_MAX_PRICE_INDEX));
+            return food;
+        } else {
+            return null;
+        }
     }
 }

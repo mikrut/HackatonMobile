@@ -9,6 +9,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_current_list" tools:context=".CurrentListActivity">
 
-    <TextView android:text="Hello World!" android:layout_width="wrap_content"
+    <ListView
+        android:id = "@+id/contentList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </RelativeLayout>

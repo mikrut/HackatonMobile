@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
-    tools:context=".CurrentListActivity">
+    tools:context="ru.bmstu.iu6.hackatonmobile.FoodEditActivity">
 
     <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
         android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay">
@@ -15,11 +15,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_current_list" />
+    <include layout="@layout/content_food_edit" />
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+    <android.support.design.widget.FloatingActionButton android:id="@+id/fab_del"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_input_add" />
+        android:layout_gravity="top" android:layout_margin="@dimen/fab_margin"
+        app:layout_anchorGravity="top"
+        app:layout_anchor="@id/fab_save"
+        android:src="@android:drawable/ic_menu_delete" />
+
+    <android.support.design.widget.FloatingActionButton android:id="@+id/fab_save"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right" android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_menu_save" />
 
 </android.support.design.widget.CoordinatorLayout>
