@@ -36,7 +36,7 @@ public class JSONGetter extends AsyncTask<Void, Void, JSONObject> {
     }
 
     @NonNull
-    public JSONObject getAPIResponse(String suburl, String method, Bundle keys) {
+    public static JSONObject getAPIResponse(String suburl, String method, Bundle keys) {
         JSONObject json = new JSONObject();
         String result = null;
         try {

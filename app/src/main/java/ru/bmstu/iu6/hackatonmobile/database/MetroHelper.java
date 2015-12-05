@@ -16,6 +16,7 @@ public class MetroHelper extends TableHelper<MetroModel> {
                     MetroReaderContract.MetroEntry.COLUMN_NAME_MAX_TIME_M + " INTEGER NOT NULL" + COMMA_SEP +
                     MetroReaderContract.MetroEntry.COLUMN_NAME_MIN_TIME_H + " INTEGER NOT NULL" + COMMA_SEP +
                     MetroReaderContract.MetroEntry.COLUMN_NAME_MIN_TIME_M + " INTEGER NOT NULL" + COMMA_SEP +
+                    MetroReaderContract.MetroEntry.COLUMN_NAME_DAYMASK    + " INTEGER NOT NULL" + COMMA_SEP +
                     MetroReaderContract.MetroEntry.COLUMN_NAME_FOUND + " DATETIME" + COMMA_SEP +
                     MetroReaderContract.MetroEntry.COLUMN_NAME_UPDATED + " DATETIME";
 
@@ -42,7 +43,8 @@ public class MetroHelper extends TableHelper<MetroModel> {
             MetroReaderContract.MetroEntry.COLUMN_NAME_MIN_TIME_H,
             MetroReaderContract.MetroEntry.COLUMN_NAME_MIN_TIME_M,
             MetroReaderContract.MetroEntry.COLUMN_NAME_FOUND,
-            MetroReaderContract.MetroEntry.COLUMN_NAME_UPDATED
+            MetroReaderContract.MetroEntry.COLUMN_NAME_UPDATED,
+            MetroReaderContract.MetroEntry.COLUMN_NAME_DAYMASK
     };
 
     public static final int PROJECTION_ID_INDEX = 0;
@@ -53,6 +55,7 @@ public class MetroHelper extends TableHelper<MetroModel> {
     public static final int PROJECTION_MIN_TIME_M_INDEX = 5;
     public static final int PROJECTION_FOUND_INDEX = 6;
     public static final int PROJECTION_UPDATED_INDEX = 7;
+    public static final int PROJECTION_DAYMASK_INDEX = 8;
 
     public MetroHelper(Context context) {
         super(context, MetroModel.class);

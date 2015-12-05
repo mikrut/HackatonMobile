@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
@@ -19,6 +20,7 @@ public class FoodEditActivity extends AppCompatActivity {
     private EditText priceInput;
     private TimePicker fromInput;
     private TimePicker toInput;
+    private CheckBox[] daysBoxes;
 
     public final static String PARAM_FOOD_ID = "FoodEditActivity.PARAM_FOOD_ID";
 
@@ -32,6 +34,15 @@ public class FoodEditActivity extends AppCompatActivity {
         priceInput = (EditText) findViewById(R.id.maxPriceInput);
         fromInput = (TimePicker) findViewById(R.id.timePickerFrom);
         toInput = (TimePicker) findViewById(R.id.timePickerTo);
+
+        daysBoxes = new CheckBox[7];
+        daysBoxes[0] = (CheckBox) findViewById(R.id.checkBoxMon);
+        daysBoxes[1] = (CheckBox) findViewById(R.id.checkBoxTue);
+        daysBoxes[2] = (CheckBox) findViewById(R.id.checkBoxWed);
+        daysBoxes[3] = (CheckBox) findViewById(R.id.checkBoxThu);
+        daysBoxes[4] = (CheckBox) findViewById(R.id.checkBoxFri);
+        daysBoxes[5] = (CheckBox) findViewById(R.id.checkBoxSat);
+        daysBoxes[6] = (CheckBox) findViewById(R.id.checkBoxSun);
 
         Intent intent = getIntent();
         if (intent.hasExtra(PARAM_FOOD_ID))
@@ -48,6 +59,15 @@ public class FoodEditActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public byte getDaysMask() {
+        byte accumulator = 0;
+        for (int i = 0; i < daysBoxes.length; i++) {
+            byte m = (byte) ((daysBoxes[i].isChecked() ? 1 : 0) << i);
+            accumulator = (byte) (accumulator | m);
+        }
+        return accumulator;
+    }
+
     class SaveAction implements View.OnClickListener {
 
         @Override
@@ -61,6 +81,8 @@ public class FoodEditActivity extends AppCompatActivity {
 
             food.setMaxH(toInput.getCurrentHour());
             food.setMaxM(toInput.getCurrentMinute());
+
+            food.setDaysMask(getDaysMask());
 
             if (food_id == null) {
                 foodHelper.saveModel(food);

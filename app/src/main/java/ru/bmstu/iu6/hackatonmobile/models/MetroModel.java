@@ -26,7 +26,17 @@ public class MetroModel implements DBModel {
     private int maxH;
     private int maxM;
 
+    private byte dayMask;
+
     public MetroModel(){}
+
+    public byte getDayMask() {
+        return dayMask;
+    }
+
+    public void setDayMask(byte dayMask) {
+        this.dayMask = dayMask;
+    }
 
     public void setValues(Cursor cursor) {
         setId(cursor.getInt(MetroHelper.PROJECTION_ID_INDEX));
@@ -50,6 +60,8 @@ public class MetroModel implements DBModel {
 
         setMaxH(cursor.getInt(MetroHelper.PROJECTION_MAX_TIME_H_INDEX));
         setMaxM(cursor.getInt(MetroHelper.PROJECTION_MAX_TIME_M_INDEX));
+
+        setDayMask((byte) cursor.getInt(MetroHelper.PROJECTION_DAYMASK_INDEX));
     }
     
     public ContentValues getValues() {
@@ -65,6 +77,8 @@ public class MetroModel implements DBModel {
 
         v.put(MetroReaderContract.MetroEntry.COLUMN_NAME_FOUND, DBHelper.sdf.format(getFoundTime()));
         v.put(MetroReaderContract.MetroEntry.COLUMN_NAME_UPDATED, DBHelper.sdf.format(getUpdatedTime()));
+
+        v.put(MetroReaderContract.MetroEntry.COLUMN_NAME_DAYMASK, getDayMask());
 
         return v;
     }

@@ -27,8 +27,18 @@ public class FoodModel implements DBModel {
     private int maxH;
     private int maxM;
 
+    private byte daysMask;
+
 
     public FoodModel() {}
+
+    public byte getDaysMask() {
+        return daysMask;
+    }
+
+    public void setDaysMask(byte daysMask) {
+        this.daysMask = daysMask;
+    }
 
     public void setValues(Cursor cursor) {
         setId(cursor.getInt(FoodHelper.PROJECTION_ID_INDEX));
@@ -52,6 +62,8 @@ public class FoodModel implements DBModel {
 
         setMaxH(cursor.getInt(FoodHelper.PROJECTION_MAX_TIME_H_INDEX));
         setMaxM(cursor.getInt(FoodHelper.PROJECTION_MAX_TIME_M_INDEX));
+
+        setDaysMask((byte) cursor.getInt(FoodHelper.PROJECTION_DAYMASK_INDEX));
     }
 
     public ContentValues getValues() {
@@ -67,6 +79,8 @@ public class FoodModel implements DBModel {
 
         v.put(FoodEntry.COLUMN_NAME_FOUND, DBHelper.sdf.format(getFoundTime()));
         v.put(FoodEntry.COLUMN_NAME_UPDATED, DBHelper.sdf.format(getUpdatedTime()));
+
+        v.put(FoodEntry.COLUMN_NAME_DAYMASK, getDaysMask());
 
         return v;
     }

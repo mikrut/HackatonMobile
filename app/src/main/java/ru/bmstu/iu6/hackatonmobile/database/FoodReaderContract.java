@@ -20,5 +20,7 @@ public class FoodReaderContract {
 
         public static final String COLUMN_NAME_UPDATED = "updated_time";
         public static final String COLUMN_NAME_FOUND = "found_time";
+
+        public static final String COLUMN_NAME_DAYMASK = "day_mask";
     }
 }

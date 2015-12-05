@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
@@ -19,6 +20,7 @@ public class MetroActivity extends AppCompatActivity {
     private TimePicker fromInput;
     private TimePicker toInput;
     private Integer metroId;
+    private CheckBox[] daysBoxes;
 
     public static final String PARAM_METRO_ID = "MetroActivity.PARAM_METRO_ID";
 
@@ -39,7 +41,15 @@ public class MetroActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra(PARAM_METRO_ID))
             metroId = intent.getIntExtra(PARAM_METRO_ID, 0);
-        
+
+        daysBoxes = new CheckBox[7];
+        daysBoxes[0] = (CheckBox) findViewById(R.id.checkBoxMon);
+        daysBoxes[1] = (CheckBox) findViewById(R.id.checkBoxTue);
+        daysBoxes[2] = (CheckBox) findViewById(R.id.checkBoxWed);
+        daysBoxes[3] = (CheckBox) findViewById(R.id.checkBoxThu);
+        daysBoxes[4] = (CheckBox) findViewById(R.id.checkBoxFri);
+        daysBoxes[5] = (CheckBox) findViewById(R.id.checkBoxSat);
+        daysBoxes[6] = (CheckBox) findViewById(R.id.checkBoxSun);
 
         FloatingActionButton fab_save = (FloatingActionButton) findViewById(R.id.fab_save);
         fab_save.setOnClickListener(new SaveAction());
@@ -48,6 +58,15 @@ public class MetroActivity extends AppCompatActivity {
         fab_delete.setOnClickListener(new DeleteAction());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public byte getDaysMask() {
+        byte accumulator = 0;
+        for (int i = 0; i < daysBoxes.length; i++) {
+            byte m = (byte) ((daysBoxes[i].isChecked() ? 1 : 0) << i);
+            accumulator = (byte) (accumulator | m);
+        }
+        return accumulator;
     }
 
     class SaveAction implements View.OnClickListener {
@@ -63,6 +82,8 @@ public class MetroActivity extends AppCompatActivity {
 
             Metro.setMaxH(toInput.getCurrentHour());
             Metro.setMaxM(toInput.getCurrentMinute());
+
+            Metro.setDayMask(getDaysMask());
 
             if (metroId == null) {
                 MetroHelper.saveModel(Metro);

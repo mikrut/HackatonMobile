@@ -12,11 +12,12 @@ public class FoodHelper extends TableHelper<FoodModel> {
     final static String CREATE_TABLE =
             "CREATE TABLE " + FoodEntry.TABLE_NAME + "(" +
             FoodEntry._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
-            FoodEntry.COLUMN_NAME_MAX_PRICE + " SMALLINT NOT NULL" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_MAX_PRICE  + " INTEGER NOT NULL" + COMMA_SEP +
             FoodEntry.COLUMN_NAME_MAX_TIME_H + " INTEGER NOT NULL" + COMMA_SEP +
             FoodEntry.COLUMN_NAME_MAX_TIME_M + " INTEGER NOT NULL" + COMMA_SEP +
             FoodEntry.COLUMN_NAME_MIN_TIME_H + " INTEGER NOT NULL" + COMMA_SEP +
             FoodEntry.COLUMN_NAME_MIN_TIME_M + " INTEGER NOT NULL" + COMMA_SEP +
+            FoodEntry.COLUMN_NAME_DAYMASK    + " INTEGER NOT NULL" + COMMA_SEP +
             FoodEntry.COLUMN_NAME_FOUND + " DATETIME" + COMMA_SEP +
             FoodEntry.COLUMN_NAME_UPDATED + " DATETIME";
 
@@ -46,7 +47,8 @@ public class FoodHelper extends TableHelper<FoodModel> {
             FoodEntry.COLUMN_NAME_MIN_TIME_H,
             FoodEntry.COLUMN_NAME_MIN_TIME_M,
             FoodEntry.COLUMN_NAME_FOUND,
-            FoodEntry.COLUMN_NAME_UPDATED
+            FoodEntry.COLUMN_NAME_UPDATED,
+            FoodEntry.COLUMN_NAME_DAYMASK
     };
 
     public static final int PROJECTION_ID_INDEX = 0;
@@ -57,6 +59,7 @@ public class FoodHelper extends TableHelper<FoodModel> {
     public static final int PROJECTION_MIN_TIME_M_INDEX = 5;
     public static final int PROJECTION_FOUND_INDEX = 6;
     public static final int PROJECTION_UPDATED_INDEX = 7;
+    public static final int PROJECTION_DAYMASK_INDEX = 8;
 
 
     public FoodHelper(Context context) {

@@ -36,6 +36,60 @@
         android:layout_below="@+id/editText"
         android:layout_alignParentStart="true" />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stationSpinner"
+        android:text="ПН"
+        android:id="@+id/checkBoxMon"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxMon"
+        android:layout_below="@+id/stationSpinner"
+        android:text="ВТ"
+        android:id="@+id/checkBoxTue"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxTue"
+        android:layout_below="@+id/stationSpinner"
+        android:text="СР"
+        android:id="@+id/checkBoxWed"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxWed"
+        android:layout_below="@+id/stationSpinner"
+        android:text="ЧТ"
+        android:id="@+id/checkBoxThu"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxThu"
+        android:layout_below="@+id/stationSpinner"
+        android:text="ПТ"
+        android:id="@+id/checkBoxFri"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxFri"
+        android:layout_below="@+id/stationSpinner"
+        android:text="СБ"
+        android:id="@+id/checkBoxSat" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxSat"
+        android:layout_below="@+id/stationSpinner"
+        android:text="ВС"
+        android:id="@+id/checkBoxSun" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +97,7 @@
         android:layout_below="@+id/stationSpinner">
 
         <LinearLayout
-            android:layout_width="0"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -66,7 +120,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical">
