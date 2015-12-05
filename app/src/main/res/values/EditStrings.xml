@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="types_array">
+        <item>Оповещение о ресторане</item>
+        <item>Оповещение о покупке</item>
+        <item>Оповещение на транспорте</item>
+        <item>Оповещение о достопримечательности</item>
+    </string-array>
+
+    <string-array name="headers_founds_array">
+        <item>Обнаружен ресторан</item>
+        <item>Обнаружен магазин</item>
+        <item>Приехали!</item>
+        <item>Найдена достопримечательность</item>
+    </string-array>
+
+    <string-array name="choose_array">
+        <item>Тип еды</item>
+        <item>Покупаемый товар</item>
+        <item>Станция</item>
+        <item>Тип достопримечательности</item>
+    </string-array>
+</resources>

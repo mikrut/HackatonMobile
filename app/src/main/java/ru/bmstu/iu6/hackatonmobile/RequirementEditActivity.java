@@ -3,26 +3,32 @@ package ru.bmstu.iu6.hackatonmobile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
-import ru.bmstu.iu6.hackatonmobile.database.FoodHelper;
-import ru.bmstu.iu6.hackatonmobile.models.FoodModel;
+import ru.bmstu.iu6.hackatonmobile.database.RequirementHelper;
+import ru.bmstu.iu6.hackatonmobile.models.RequirementModel;
 
-public class FoodEditActivity extends AppCompatActivity {
+public class RequirementEditActivity extends AppCompatActivity {
     private Integer food_id = null;
+    private int type = RequirementModel.TYPE_FOOD;
 
     private EditText priceInput;
-    private TimePicker fromInput;
-    private TimePicker toInput;
+    private EditText categoryInput;
     private CheckBox[] daysBoxes;
 
-    public final static String PARAM_FOOD_ID = "FoodEditActivity.PARAM_FOOD_ID";
+    private TextView header, categoryHelper, priceHelper;
+
+    private EditText minH, minM, maxH, maxM;
+
+    public final static String PARAM_FOOD_ID = "RequirementEditActivity.PARAM_FOOD_ID";
+    public final static String PARAM_TYPE = "RequirementEditActivity.PARAM_TYPE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +38,16 @@ public class FoodEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         priceInput = (EditText) findViewById(R.id.maxPriceInput);
-        fromInput = (TimePicker) findViewById(R.id.timePickerFrom);
-        toInput = (TimePicker) findViewById(R.id.timePickerTo);
+        categoryInput = (EditText) findViewById(R.id.foodCategroyInput);
+
+        header = (TextView) findViewById(R.id.textView);
+        categoryHelper = (TextView) findViewById(R.id.foodTypeText);
+        priceHelper = (TextView) findViewById(R.id.maxPriceHelper);
+
+        minH = (EditText) findViewById(R.id.minH);
+        minM = (EditText) findViewById(R.id.minM);
+        maxH = (EditText) findViewById(R.id.maxH);
+        maxM = (EditText) findViewById(R.id.maxM);
 
         daysBoxes = new CheckBox[7];
         daysBoxes[0] = (CheckBox) findViewById(R.id.checkBoxMon);
@@ -47,6 +61,19 @@ public class FoodEditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra(PARAM_FOOD_ID))
             food_id = intent.getIntExtra(PARAM_FOOD_ID, 0);
+        if (intent.hasExtra(PARAM_TYPE))
+            type = intent.getIntExtra(PARAM_TYPE, RequirementModel.TYPE_FOOD);
+
+        String[] headers = getResources().getStringArray(R.array.types_array);
+        String[] chooses = getResources().getStringArray(R.array.choose_array);
+
+        header.setText(headers[type]);
+        categoryHelper.setText(chooses[type]);
+
+        if (type != RequirementModel.TYPE_STORE && type != RequirementModel.TYPE_FOOD) {
+            priceHelper.setVisibility(View.GONE);
+            priceInput.setVisibility(View.GONE);
+        }
 
         FloatingActionButton fab_save = (FloatingActionButton) findViewById(R.id.fab_save);
         FloatingActionButton fab_del = (FloatingActionButton) findViewById(R.id.fab_del);
@@ -73,27 +100,30 @@ public class FoodEditActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            FoodModel food = new FoodModel();
-            FoodHelper foodHelper = new FoodHelper(FoodEditActivity.this);
+            RequirementModel food = new RequirementModel();
+            RequirementHelper requirementHelper = new RequirementHelper(RequirementEditActivity.this);
             food.setMaxPrice(Short.valueOf(priceInput.getText().toString()));
 
-            food.setMinH(fromInput.getCurrentHour());
-            food.setMinM(fromInput.getCurrentMinute());
+            food.setMinH(Integer.valueOf(minH.getText().toString()));
+            food.setMinM(Integer.valueOf(minM.getText().toString()));
 
-            food.setMaxH(toInput.getCurrentHour());
-            food.setMaxM(toInput.getCurrentMinute());
+            food.setMaxH(Integer.valueOf(maxH.getText().toString()));
+            food.setMaxM(Integer.valueOf(maxM.getText().toString()));
 
             food.setDaysMask(getDaysMask());
 
+            food.setType(type);
+            food.setCategory(categoryInput.getText().toString());
+
             if (food_id == null) {
-                foodHelper.saveModel(food);
+                requirementHelper.saveModel(food);
             } else {
                 food.setId(food_id);
-                foodHelper.updateModel(food);
+                requirementHelper.updateModel(food);
             }
 
-            Intent intent = new Intent(FoodEditActivity.this, CurrentListActivity.class);
-            FoodEditActivity.this.startActivity(intent);
+            Intent intent = new Intent(RequirementEditActivity.this, CurrentListActivity.class);
+            RequirementEditActivity.this.startActivity(intent);
         }
     }
 
@@ -101,14 +131,14 @@ public class FoodEditActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            FoodHelper foodHelper = new FoodHelper(FoodEditActivity.this);
+            RequirementHelper requirementHelper = new RequirementHelper(RequirementEditActivity.this);
 
             if (food_id != null) {
-                foodHelper.deleteModel(food_id);
+                requirementHelper.deleteModel(food_id);
             }
 
-            Intent intent = new Intent(FoodEditActivity.this, CurrentListActivity.class);
-            FoodEditActivity.this.startActivity(intent);
+            Intent intent = new Intent(RequirementEditActivity.this, CurrentListActivity.class);
+            RequirementEditActivity.this.startActivity(intent);
         }
     }
 

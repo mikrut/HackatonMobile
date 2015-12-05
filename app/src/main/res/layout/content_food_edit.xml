@@ -8,7 +8,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_food_edit"
-    tools:context="ru.bmstu.iu6.hackatonmobile.FoodEditActivity">
+    tools:context="ru.bmstu.iu6.hackatonmobile.RequirementEditActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,10 +23,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Предел цены"
-        android:id="@+id/editText"
+        android:text="Вид еды"
+        android:id="@+id/foodTypeText"
         android:layout_marginTop="24dp"
         android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/foodCategroyInput"
+        android:layout_below="@+id/foodTypeText"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Предел цены"
+        android:id="@+id/maxPriceHelper"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/foodCategroyInput"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -35,114 +54,10 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/maxPriceInput"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/maxPriceHelper"
         android:layout_alignParentStart="true" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/maxPriceInput"
-        android:text="ПН"
-        android:id="@+id/checkBoxMon"
-        android:checked="true" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/checkBoxMon"
-        android:layout_below="@+id/maxPriceInput"
-        android:text="ВТ"
-        android:id="@+id/checkBoxTue"
-        android:checked="true" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/checkBoxTue"
-        android:layout_below="@+id/maxPriceInput"
-        android:text="СР"
-        android:id="@+id/checkBoxWed"
-        android:checked="true" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/checkBoxWed"
-        android:layout_below="@+id/maxPriceInput"
-        android:text="ЧТ"
-        android:id="@+id/checkBoxThu"
-        android:checked="true" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/checkBoxThu"
-        android:layout_below="@+id/maxPriceInput"
-        android:text="ПТ"
-        android:id="@+id/checkBoxFri"
-        android:checked="true" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/checkBoxFri"
-        android:layout_below="@+id/maxPriceInput"
-        android:text="СБ"
-        android:id="@+id/checkBoxSat" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/checkBoxSat"
-        android:layout_below="@+id/maxPriceInput"
-        android:text="ВС"
-        android:id="@+id/checkBoxSun" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/checkBoxMon">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Поиск от"
-                android:layout_marginTop="24dp"
-                android:layout_below="@+id/textView"
-                android:layout_alignParentStart="true" />
-
-            <TimePicker
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/timePickerFrom"
-
-                android:layout_centerVertical="true" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Поиск до"
-                android:layout_marginTop="24dp"
-                android:layout_below="@+id/textView"
-                android:layout_alignParentStart="true" />
-
-            <TimePicker
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/timePickerTo"
-
-                android:layout_centerVertical="true" />
-        </LinearLayout>
-    </LinearLayout>
+    <include layout="@layout/time_from_to_layout" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_below="@+id/maxPriceInput" />
 
 </RelativeLayout>

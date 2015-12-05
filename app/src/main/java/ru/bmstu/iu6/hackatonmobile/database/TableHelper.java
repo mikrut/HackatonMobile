@@ -16,7 +16,7 @@ import ru.bmstu.iu6.hackatonmobile.models.DBModel;
  * Created by mikrut on 05.12.15.
  */
 public abstract class TableHelper<Model extends DBModel> {
-    private DBHelper dbHelper;
+    protected DBHelper dbHelper;
     private Class<Model> modelClass;
 
     public TableHelper(Context context, Class<Model> modelClass) {
@@ -52,10 +52,8 @@ public abstract class TableHelper<Model extends DBModel> {
         return db.insert(getTableName(), null, values);
     }
 
-    @NonNull
-    public ArrayList<Model> getModels() {
+    protected ArrayList<Model> cursorToModelList(Cursor cursor) {
         ArrayList<Model> models = new ArrayList<>();
-        Cursor cursor = getModelCursor();
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             try {
@@ -70,6 +68,12 @@ public abstract class TableHelper<Model extends DBModel> {
         }
 
         return models;
+    }
+
+    @NonNull
+    public ArrayList<Model> getModels() {
+        Cursor cursor = getModelCursor();
+        return cursorToModelList(cursor);
     }
 
     @NonNull
@@ -123,6 +127,6 @@ public abstract class TableHelper<Model extends DBModel> {
         model.setUpdatedTime(now);
 
         ContentValues cv = model.getValues();
-        db.update(MetroReaderContract.MetroEntry.TABLE_NAME, cv, selection, selectionArgs);
+        db.update(getTableName(), cv, selection, selectionArgs);
     }
 }

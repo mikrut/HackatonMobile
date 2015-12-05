@@ -9,9 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import ru.bmstu.iu6.hackatonmobile.FoodEditActivity;
-import ru.bmstu.iu6.hackatonmobile.MetroActivity;
+import ru.bmstu.iu6.hackatonmobile.RequirementEditActivity;
 import ru.bmstu.iu6.hackatonmobile.R;
+import ru.bmstu.iu6.hackatonmobile.models.RequirementModel;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -38,23 +38,25 @@ public class CategoryActivity extends AppCompatActivity {
                 TextView textView = (TextView) itemClicked;
                 String strText = textView.getText().toString(); // получаем текст нажатого элемента
 
+                Intent categoryIntent = new Intent(listView.getContext(), RequirementEditActivity.class);
                 switch (strText) {
                     case "Рестораны" : {
-                        startActivity(new Intent(listView.getContext(), FoodEditActivity.class));
+                        categoryIntent.putExtra(RequirementEditActivity.PARAM_TYPE, RequirementModel.TYPE_FOOD);
                         break;
                     }
                     case "Магазины" : {
-                        startActivity(new Intent(listView.getContext(), FoodEditActivity.class));
+                        categoryIntent.putExtra(RequirementEditActivity.PARAM_TYPE, RequirementModel.TYPE_STORE);
                         break;
                     }
                     case "Метро" : {
-                        startActivity(new Intent(listView.getContext(), MetroActivity.class));
+                        categoryIntent.putExtra(RequirementEditActivity.PARAM_TYPE, RequirementModel.TYPE_TRANSPORT);
                         break;
                     }
                     default : {
                         break;
                     }
                 }
+                startActivity(categoryIntent);
             }
         });
 

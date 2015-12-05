@@ -22,7 +22,7 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by mikrut on 04.12.15.
  */
 public class JSONGetter extends AsyncTask<Void, Void, JSONObject> {
-    private static final String baseurl = "http://localhost:8080/";
+    private static final String baseurl = "http://sitenotifier.herokuapp.com/";
     private String suburl, method;
     private Bundle params;
 
