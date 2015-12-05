@@ -1,7 +1,13 @@
 package ru.bmstu.iu6.hackatonmobile.activities;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
@@ -36,6 +42,8 @@ import ru.bmstu.iu6.hackatonmobile.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BeaconConsumer {
+
+    private static final int NOTIFY_ID = 101;
 
     private CharSequence navDrawerTitle;
     private BeaconManager beaconManager;
@@ -133,10 +141,11 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_main_drawer_settings : {
-
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             }
             case R.id.nav_main_drawer_subscr : {
+                startActivity(new Intent(this, CategoryActivity.class));
                 break;
             }
             default : {
@@ -158,8 +167,61 @@ public class MainActivity extends AppCompatActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        filterBeacons(beacons);
+                        String UUID;
+                        int Major;
+                        int Minor;
+                        if (!beacons.isEmpty()) {
+                            for ( Beacon tempBeacon : beacons) {
+                                // здесь получаем параметры маячка каждого
+                                UUID = tempBeacon.getId1().toString();
+                                Major = tempBeacon.getId2().toInt();
+                                Minor = tempBeacon.getId3().toInt();
+                            }
+                            Context context = getApplicationContext();
+                            String bigText = "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка ";
 
+                            Intent notificationIntent = new Intent(context, MainActivity.class);
+                            PendingIntent contentIntent = PendingIntent.getActivity(context,
+                                    0, notificationIntent,
+                                    PendingIntent.FLAG_CANCEL_CURRENT);
+
+                            Resources res = context.getResources();
+                            Notification.Builder builder = new Notification.Builder(context);
+
+                            builder.setContentIntent(contentIntent)
+                                    .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                                            // большая картинка
+                                    .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_menu_manage))
+                                            //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
+                                    .setTicker("Последнее китайское предупреждение!")
+                                    .setWhen(System.currentTimeMillis())
+                                    .setDefaults(Notification.DEFAULT_ALL)
+
+                                    .setAutoCancel(true)
+                                            //.setContentTitle(res.getString(R.string.notifytitle)) // Заголовок уведомления
+                                    .setContentTitle("Напоминание")
+                                            //.setContentText(res.getString(R.string.notifytext))
+                                    .setContentText("Пора покормить кота"); // Текст уведомления
+
+                            // Notification notification = builder.getNotification(); // до API 16
+//                            Notification notification = builder.build();
+                            Notification notification = new Notification.BigTextStyle(builder)
+                                    .bigText(bigText).build();
+
+
+                            NotificationManager notificationManager = (NotificationManager) context
+                                    .getSystemService(Context.NOTIFICATION_SERVICE);
+                            notificationManager.notify(NOTIFY_ID, notification);
+
+                        }
                     }
                 });
             }
@@ -181,8 +243,8 @@ public class MainActivity extends AppCompatActivity
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
         BeaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
-        beaconManager.setForegroundScanPeriod(1000);
-        beaconManager.setBackgroundScanPeriod(1000);
+        beaconManager.setForegroundScanPeriod(600);
+        beaconManager.setBackgroundScanPeriod(600);
 
         // добавляем парсер iBeacon'ов
         beaconManager.getBeaconParsers().add(new BeaconParser().
@@ -192,12 +254,6 @@ public class MainActivity extends AppCompatActivity
 
         // When binding to the service, we return an interface to our messenger for sending messages to the service.
         beaconManager.bind(this);
-    }
-
-    private void filterBeacons(Collection<Beacon> beacons) {
-
-        //TODO фильтрация Beacon по времении (если было в течение последних n часов, то не отправляем на сервер)
-        //TODO изменить возвращаемое значение на массив beacons
     }
 
     private void pushToServer() {
