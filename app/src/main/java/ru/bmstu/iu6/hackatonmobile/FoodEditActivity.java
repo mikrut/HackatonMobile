@@ -56,6 +56,7 @@ public class FoodEditActivity extends AppCompatActivity {
             fab_del.setVisibility(View.GONE);
         }
 
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
