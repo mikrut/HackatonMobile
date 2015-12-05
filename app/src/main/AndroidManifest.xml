@@ -16,12 +16,8 @@
         <activity
             android:name=".RequirementEditActivity"
             android:label="@string/title_activity_food_edit"
-            android:parentActivityName=".CurrentListActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="CurrentListActivity" />
-        </activity>
+
+        <activity android:name=".activities.CategoryActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"

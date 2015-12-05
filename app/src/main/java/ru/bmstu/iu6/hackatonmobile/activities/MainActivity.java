@@ -1,11 +1,19 @@
 package ru.bmstu.iu6.hackatonmobile.activities;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.SwitchCompat;
 import android.text.format.Time;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +43,8 @@ import ru.bmstu.iu6.hackatonmobile.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BeaconConsumer {
 
+    private static final int NOTIFY_ID = 101;
+
     private CharSequence navDrawerTitle;
     private BeaconManager beaconManager;
     private ArrayList<Beacon> beaconArray;
@@ -53,18 +63,9 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), CategoryActivity.class);
-                startActivity(intent);
-            }
-        });
-
         navDrawerTitle = getTitle();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        ActionBarDrawerToggle navActionBarToggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
             /** Вызывается, когда drawer установился в польностью закрытое состояние. */
@@ -83,11 +84,20 @@ public class MainActivity extends AppCompatActivity
 
         };
 
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        drawer.setDrawerListener(navActionBarToggle);
+        navActionBarToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), CategoryActivity.class);
+                startActivity(intent);
+            }
+        });
 
         configBeaconManager();
     }
@@ -104,8 +114,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu);
         return true;
     }
 
@@ -130,18 +139,18 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id) {
+            case R.id.nav_main_drawer_settings : {
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            }
+            case R.id.nav_main_drawer_subscr : {
+                startActivity(new Intent(this, CategoryActivity.class));
+                break;
+            }
+            default : {
+                break;
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,14 +167,68 @@ public class MainActivity extends AppCompatActivity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //TODO добавление в массив и прочяя лабуда
+                        String UUID;
+                        int Major;
+                        int Minor;
+                        if (!beacons.isEmpty()) {
+                            for ( Beacon tempBeacon : beacons) {
+                                // здесь получаем параметры маячка каждого
+                                UUID = tempBeacon.getId1().toString();
+                                Major = tempBeacon.getId2().toInt();
+                                Minor = tempBeacon.getId3().toInt();
+                            }
+                            Context context = getApplicationContext();
+                            String bigText = "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка " +
+                                    "Большая строка большая строка ";
+
+                            Intent notificationIntent = new Intent(context, MainActivity.class);
+                            PendingIntent contentIntent = PendingIntent.getActivity(context,
+                                    0, notificationIntent,
+                                    PendingIntent.FLAG_CANCEL_CURRENT);
+
+                            Resources res = context.getResources();
+                            Notification.Builder builder = new Notification.Builder(context);
+
+                            builder.setContentIntent(contentIntent)
+                                    .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                                            // большая картинка
+                                    .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_menu_manage))
+                                            //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
+                                    .setTicker("Последнее китайское предупреждение!")
+                                    .setWhen(System.currentTimeMillis())
+                                    .setDefaults(Notification.DEFAULT_ALL)
+
+                                    .setAutoCancel(true)
+                                            //.setContentTitle(res.getString(R.string.notifytitle)) // Заголовок уведомления
+                                    .setContentTitle("Напоминание")
+                                            //.setContentText(res.getString(R.string.notifytext))
+                                    .setContentText("Пора покормить кота"); // Текст уведомления
+
+                            // Notification notification = builder.getNotification(); // до API 16
+//                            Notification notification = builder.build();
+                            Notification notification = new Notification.BigTextStyle(builder)
+                                    .bigText(bigText).build();
+
+
+                            NotificationManager notificationManager = (NotificationManager) context
+                                    .getSystemService(Context.NOTIFICATION_SERVICE);
+                            notificationManager.notify(NOTIFY_ID, notification);
+
+                        }
                     }
                 });
             }
         });
 
         try {
-            beaconManager.startRangingBeaconsInRegion(new org.altbeacon.beacon.Region("0x00000000000000005545600000000000", null, null, null));
+            beaconManager.startRangingBeaconsInRegion(new org.altbeacon.beacon.Region("Server", null, null, null));
         } catch (RemoteException e) {
             Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
         }
@@ -173,14 +236,15 @@ public class MainActivity extends AppCompatActivity
 
     /** секция, отвечающая за собственные функции **/
 
+
     // конфигурируем beaconmanager
     private void configBeaconManager() {
         // получаем инстанс для данного приложения
         beaconManager = BeaconManager.getInstanceForApplication(this);
 
         BeaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
-        beaconManager.setForegroundScanPeriod(15000);
-        beaconManager.setBackgroundScanPeriod(30000);
+        beaconManager.setForegroundScanPeriod(600);
+        beaconManager.setBackgroundScanPeriod(600);
 
         // добавляем парсер iBeacon'ов
         beaconManager.getBeaconParsers().add(new BeaconParser().
@@ -190,5 +254,9 @@ public class MainActivity extends AppCompatActivity
 
         // When binding to the service, we return an interface to our messenger for sending messages to the service.
         beaconManager.bind(this);
+    }
+
+    private void pushToServer() {
+        //TODO отправка на сервер
     }
 }
