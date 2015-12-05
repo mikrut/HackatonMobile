@@ -34,7 +34,7 @@ public class RequirementEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_edit);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_food_edit);
         setSupportActionBar(toolbar);
 
         priceInput = (EditText) findViewById(R.id.maxPriceInput);

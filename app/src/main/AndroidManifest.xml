@@ -15,7 +15,8 @@
         </activity>
         <activity
             android:name=".RequirementEditActivity"
-            android:label="@string/title_activity_food_edit" />
+            android:label="@string/title_activity_food_edit"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".activities.CategoryActivity" />
         <activity
