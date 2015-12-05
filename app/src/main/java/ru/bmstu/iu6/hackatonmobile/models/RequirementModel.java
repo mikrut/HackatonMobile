@@ -102,8 +102,14 @@ public class RequirementModel implements DBModel {
         v.put(RequirementEntry.COLUMN_NAME_MIN_TIME_H, getMinH());
         v.put(RequirementEntry.COLUMN_NAME_MIN_TIME_M, getMinM());
 
-        v.put(RequirementEntry.COLUMN_NAME_FOUND, DBHelper.sdf.format(getFoundTime()));
-        v.put(RequirementEntry.COLUMN_NAME_UPDATED, DBHelper.sdf.format(getUpdatedTime()));
+        if (getFoundTime() != null)
+            v.put(RequirementEntry.COLUMN_NAME_FOUND, DBHelper.sdf.format(getFoundTime().getTime()));
+        else
+            v.put(RequirementEntry.COLUMN_NAME_FOUND, (String) null);
+        if (getUpdatedTime() != null)
+           v.put(RequirementEntry.COLUMN_NAME_UPDATED, DBHelper.sdf.format(getUpdatedTime().getTime()));
+        else
+            v.put(RequirementEntry.COLUMN_NAME_UPDATED, (String) null);
 
         v.put(RequirementEntry.COLUMN_NAME_DAYMASK, getDaysMask());
 

@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -23,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.altbeacon.beacon.Beacon;
@@ -38,6 +40,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 import ru.bmstu.iu6.hackatonmobile.R;
+import ru.bmstu.iu6.hackatonmobile.database.RequirementAdapter;
+import ru.bmstu.iu6.hackatonmobile.database.RequirementHelper;
+import ru.bmstu.iu6.hackatonmobile.network.BeaconDispatcher;
 
 
 public class MainActivity extends AppCompatActivity
@@ -100,6 +105,18 @@ public class MainActivity extends AppCompatActivity
         });
 
         configBeaconManager();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        RequirementHelper requirementHelper = new RequirementHelper(this);
+        Cursor cursor = requirementHelper.getModelCursor();
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        RequirementAdapter requirementAdapter = new RequirementAdapter(this, cursor, 0);
+        listView.setAdapter(requirementAdapter);
     }
 
     @Override
@@ -176,6 +193,9 @@ public class MainActivity extends AppCompatActivity
                                 UUID = tempBeacon.getId1().toString();
                                 Major = tempBeacon.getId2().toInt();
                                 Minor = tempBeacon.getId3().toInt();
+
+                                BeaconDispatcher beaconDispatcher = new BeaconDispatcher(getBaseContext());
+                                beaconDispatcher.dispatchBeacon(UUID, Major, Minor);
                             }
                             Context context = getApplicationContext();
                             String bigText = "Большая строка большая строка " +

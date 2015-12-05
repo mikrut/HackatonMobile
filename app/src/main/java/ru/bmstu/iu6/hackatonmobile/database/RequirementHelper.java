@@ -26,7 +26,7 @@ public class RequirementHelper extends TableHelper<RequirementModel> {
             RequirementEntry.COLUMN_NAME_CATEGORY   + " TEXT NOT NULL"    + COMMA_SEP +
             RequirementEntry.COLUMN_NAME_TYPE       + " INTEGER NOT NULL" + COMMA_SEP +
             RequirementEntry.COLUMN_NAME_FOUND + " DATETIME" + COMMA_SEP +
-            RequirementEntry.COLUMN_NAME_UPDATED + " DATETIME";
+            RequirementEntry.COLUMN_NAME_UPDATED + " DATETIME" + ")";
 
     final static String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + RequirementEntry.TABLE_NAME;

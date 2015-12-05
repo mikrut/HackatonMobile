@@ -48,14 +48,16 @@
         android:layout_toRightOf="@+id/checkBoxFri"
         
         android:text="СБ"
-        android:id="@+id/checkBoxSat" />
+        android:id="@+id/checkBoxSat"
+        android:checked="true" />
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/checkBoxSat"
         
         android:text="ВС"
-        android:id="@+id/checkBoxSun" />
+        android:id="@+id/checkBoxSun"
+        android:checked="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,7 +83,8 @@
                 android:inputType="number"
                 android:hint="HH"
                 android:ems="10"
-                android:id="@+id/minH"/>
+                android:id="@+id/minH"
+                android:text="12" />
 
             <EditText
                 android:layout_width="80dp"
@@ -89,7 +92,8 @@
                 android:inputType="number"
                 android:hint="MM"
                 android:ems="10"
-                android:id="@+id/minM"/>
+                android:id="@+id/minM"
+                android:text="00" />
 
         </LinearLayout>
 
@@ -114,7 +118,8 @@
                 android:inputType="number"
                 android:hint="HH"
                 android:ems="10"
-                android:id="@+id/maxH"/>
+                android:id="@+id/maxH"
+                android:text="22" />
 
             <EditText
                 android:layout_width="80dp"
@@ -122,7 +127,8 @@
                 android:inputType="number"
                 android:hint="MM"
                 android:ems="10"
-                android:id="@+id/maxM"/>
+                android:id="@+id/maxM"
+                android:text="00" />
 
         </LinearLayout>
     </LinearLayout>

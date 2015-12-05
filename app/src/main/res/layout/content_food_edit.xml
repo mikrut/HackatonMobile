@@ -36,7 +36,8 @@
         android:ems="10"
         android:id="@+id/foodCategroyInput"
         android:layout_below="@+id/foodTypeText"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="Food" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,7 +56,8 @@
         android:ems="10"
         android:id="@+id/maxPriceInput"
         android:layout_below="@+id/maxPriceHelper"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="250" />
 
     <include layout="@layout/time_from_to_layout" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:layout_below="@+id/maxPriceInput" />

@@ -8,6 +8,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,12 +33,37 @@ public class BeaconDispatcher {
     public final static int MAJOR_MEMORIAL = 3;
     public final static int MAJOR_LOST  = 10;
 
+    public Bus lost_bus = new Bus();
+    public Bus requirement_bus = new Bus();
+    private boolean lost = false;
+    private boolean finish_flag = false;
+    public RequirementModel requirementModel;
+
+    @Subscribe
+    public void answerAwailable(JSONObject response) {
+        if (lost) {
+            dispatchLostResult(response);
+        } else {
+            try {
+                if (response.has("text") && response.getBoolean("text")){
+                    dispatchTypedResult(requirementModel);
+                    finish_flag = true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public BeaconDispatcher(Context context) {
         this.context = context;
+        this.lost_bus.register(this);
+        this.requirement_bus.register(this);
     }
 
     public void dispatchBeacon(String UUID, int major, int minor) {
+        Log.v("dispatch beacon", "dispatching " + UUID);
         // url: http://sitenotifier.herokuapp.com/goods/spot
         // POST: uuid, major, minor, group - name of good or name of station (String), [maxPrice, minPrice]
         // lost: {alert => true/false}
@@ -51,20 +79,17 @@ public class BeaconDispatcher {
             case MAJOR_STORE:
             case MAJOR_RESTAURANT:
             case MAJOR_MEMORIAL:
-                RequirementModel model = pluckType(major, "/goods/restaurant", method, params);
-                if (model != null) {
-                    dispatchTypedResult(model);
-                }
+                RequirementModel model = pluckType(major, "/goods/restaurant", method, params, requirement_bus);
                 break;
             case MAJOR_LOST:
-                JSONObject result = JSONGetter.getAPIResponse("/goods/spot", method, params);
-                dispatchLostResult(result);
+                JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, lost_bus);
+                jsonGetter.doInBackground(null);
                 break;
         }
     }
 
     @Nullable
-    public RequirementModel pluckType(int major, String suburl, String method, Bundle params) {
+    public RequirementModel pluckType(int major, String suburl, String method, Bundle params, Bus requirement_bus) {
         RequirementHelper requirementHelper = new RequirementHelper(context);
         ArrayList<RequirementModel> models = requirementHelper.getModelByType(major);
 
@@ -82,14 +107,11 @@ public class BeaconDispatcher {
                         model.getType() == RequirementModel.TYPE_STORE) {
                     params.putInt("maxPrice", model.getMaxPrice());
                 }
-                JSONObject response = JSONGetter.getAPIResponse(suburl, method, params);
-                try {
-                    if (response.has("text") && response.getBoolean("text")){
-                        return model;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                requirementModel = model;
+                if(finish_flag)
+                    return null;
+                JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, requirement_bus);
+                jsonGetter.doInBackground(null);
             }
         }
         return null;

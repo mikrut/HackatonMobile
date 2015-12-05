@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -33,6 +34,7 @@ public class JSONGetter extends AsyncTask<Void, Void, JSONObject> {
         this.method = method;
         this.params = params;
         this.publisher = publisher;
+        this.publisher.register(this);
     }
 
     @NonNull
@@ -47,7 +49,7 @@ public class JSONGetter extends AsyncTask<Void, Void, JSONObject> {
             }
             URL url = uriBuilder.build().toURL();
 
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(method);
 
             StringBuilder responseBuilder = new StringBuilder();
