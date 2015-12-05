@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity
                             Notification.Builder builder = new Notification.Builder(context);
 
                             builder.setContentIntent(contentIntent)
-                                    .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                                    .setSmallIcon(R.drawable.ic_menu_manage)
                                             // большая картинка
                                     .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_menu_manage))
                                             //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity
 
     /** секция, отвечающая за собственные функции **/
 
-
     // конфигурируем beaconmanager
     private void configBeaconManager() {
         // получаем инстанс для данного приложения
@@ -254,9 +253,5 @@ public class MainActivity extends AppCompatActivity
 
         // When binding to the service, we return an interface to our messenger for sending messages to the service.
         beaconManager.bind(this);
-    }
-
-    private void pushToServer() {
-        //TODO отправка на сервер
     }
 }

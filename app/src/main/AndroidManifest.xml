@@ -15,7 +15,7 @@
         </activity>
         <activity
             android:name=".RequirementEditActivity"
-            android:label="@string/title_activity_food_edit"
+            android:label="@string/title_activity_food_edit" />
 
         <activity android:name=".activities.CategoryActivity" />
         <activity
