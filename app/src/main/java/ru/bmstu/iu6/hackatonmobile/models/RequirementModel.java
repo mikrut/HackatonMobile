@@ -72,8 +72,13 @@ public class RequirementModel implements DBModel {
             t.setTime(dt);
             setUpdatedTime(t);
 
-            dt = DBHelper.sdf.parse(cursor.getString(RequirementHelper.PROJECTION_FOUND_INDEX));
-            t.setTime(dt);
+            String found = cursor.getString(RequirementHelper.PROJECTION_FOUND_INDEX);
+            if(found != null) {
+                dt = DBHelper.sdf.parse(found);
+                t.setTime(dt);
+            } else {
+                t = null;
+            }
             setFoundTime(t);
         } catch (ParseException e) {
             e.printStackTrace();

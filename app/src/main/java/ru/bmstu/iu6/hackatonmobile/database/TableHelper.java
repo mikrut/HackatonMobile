@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -44,6 +45,7 @@ public abstract class TableHelper<Model extends DBModel> {
     }
 
     public long saveModel(@NonNull Model model) {
+        Log.e("save model", "save model");
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         GregorianCalendar now = new GregorianCalendar();

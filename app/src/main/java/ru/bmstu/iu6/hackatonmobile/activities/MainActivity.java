@@ -194,8 +194,11 @@ public class MainActivity extends AppCompatActivity
                                 Major = tempBeacon.getId2().toInt();
                                 Minor = tempBeacon.getId3().toInt();
 
-                                BeaconDispatcher beaconDispatcher = new BeaconDispatcher(getBaseContext());
-                                beaconDispatcher.dispatchBeacon(UUID, Major, Minor);
+                                if (tempBeacon.getDistance() < 5.0f) {
+
+                                    BeaconDispatcher beaconDispatcher = new BeaconDispatcher(getBaseContext());
+                                    beaconDispatcher.dispatchBeacon(UUID, Major, Minor);
+                                }
                             }
 //                            Context context = getApplicationContext();
 //                            String bigText = "Большая строка большая строка " +

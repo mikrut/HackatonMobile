@@ -78,16 +78,16 @@ public class BeaconDispatcher {
         params.putInt("major", major);
         params.putInt("minor", minor);
 
-        final String method = "POST";
+        final String method = "GET";
         switch(major) {
             case MAJOR_METRO:
             case MAJOR_STORE:
             case MAJOR_RESTAURANT:
             case MAJOR_MEMORIAL:
-                RequirementModel model = pluckType(major, "/goods/restaurant", method, params, requirement_bus);
+                RequirementModel model = pluckType(major, "/goods/spot.json", method, params, requirement_bus);
                 break;
             case MAJOR_LOST:
-                JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, lost_bus);
+                JSONGetter jsonGetter = new JSONGetter("/goods/spot.json", method, params, lost_bus);
                 jsonGetter.execute((Void) null);
                 String uuid = "00000000-0000-0000-5545-600000000000";
                 if (UUID.equals(uuid)) {
@@ -106,7 +106,14 @@ public class BeaconDispatcher {
     @Nullable
     public RequirementModel pluckType(int major, String suburl, String method, Bundle params, Bus requirement_bus) {
         RequirementHelper requirementHelper = new RequirementHelper(context);
-        ArrayList<RequirementModel> models = requirementHelper.getModelByType(major);
+        int type = RequirementModel.TYPE_FOOD;
+        if (major == MAJOR_METRO)
+            type = RequirementModel.TYPE_TRANSPORT;
+        if (major == MAJOR_STORE)
+            type = RequirementModel.TYPE_STORE;
+        if (major == MAJOR_MEMORIAL)
+            type = RequirementModel.TYPE_MEMORIAL;
+        ArrayList<RequirementModel> models = requirementHelper.getModelByType(type);
 
         GregorianCalendar now = new GregorianCalendar();
         int current_day_index = (now.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY + 7) % 7;
@@ -126,7 +133,7 @@ public class BeaconDispatcher {
                 requirementModel = model;
                 if(finish_flag)
                     return null;
-                JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, requirement_bus);
+                JSONGetter jsonGetter = new JSONGetter("/goods/spot.json", method, params, requirement_bus);
                 jsonGetter.execute((Void) null);
 
                 String uuid = "00000000-0000-0000-5545-600000000000";
@@ -145,7 +152,7 @@ public class BeaconDispatcher {
         model.setFoundTime(now);
 
         RequirementHelper requirementHelper = new RequirementHelper(context);
-        requirementHelper.saveModel(model);
+        requirementHelper.updateModel(model);
 
         String[] foundHeaders = context.getResources().getStringArray(R.array.headers_founds_array);
 
