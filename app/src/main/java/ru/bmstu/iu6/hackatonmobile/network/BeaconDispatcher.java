@@ -46,6 +46,11 @@ public class BeaconDispatcher {
         } else {
             try {
                 if (response.has("text") && response.getBoolean("text")){
+                    RequirementModel currentModel = requirementModel;
+                    if (response.has("id")) {
+                        RequirementHelper requirementHelper = new RequirementHelper(context);
+                        requirementModel = requirementHelper.findModel(response.getInt("id"));
+                    }
                     dispatchTypedResult(requirementModel);
                     finish_flag = true;
                 }
@@ -106,6 +111,7 @@ public class BeaconDispatcher {
                 if (model.getType() == RequirementModel.TYPE_FOOD ||
                         model.getType() == RequirementModel.TYPE_STORE) {
                     params.putInt("maxPrice", model.getMaxPrice());
+                    params.putInt("idspot", model.getId());
                 }
                 requirementModel = model;
                 if(finish_flag)
