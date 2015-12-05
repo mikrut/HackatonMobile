@@ -40,7 +40,7 @@ public class CategoryActivity extends AppCompatActivity {
 
                 switch (strText) {
                     case "Рестораны" : {
-                        startActivity(new Intent(listView.getContext(), FoodEditActivity.class));
+                        startActivity(new Intent(listView.getContext(), MainActivity.class));
                         break;
                     }
                     case "Магазины" : {

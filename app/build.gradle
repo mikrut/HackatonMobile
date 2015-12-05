@@ -11,6 +11,15 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res/layouts/layout_buttons',
+                    'src/main/res/layouts',
+                    'src/main/res'
+            ]
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -29,3 +38,4 @@ dependencies {
     compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
     compile 'com.squareup:otto:1.3.8'
 }
+
