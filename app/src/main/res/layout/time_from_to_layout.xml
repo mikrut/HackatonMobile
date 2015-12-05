@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:text="ПН"
+        android:id="@+id/checkBoxMon"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxMon"
+        
+        android:text="ВТ"
+        android:id="@+id/checkBoxTue"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxTue"
+        
+        android:text="СР"
+        android:id="@+id/checkBoxWed"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxWed"
+        
+        android:text="ЧТ"
+        android:id="@+id/checkBoxThu"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxThu"
+        
+        android:text="ПТ"
+        android:id="@+id/checkBoxFri"
+        android:checked="true" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxFri"
+        
+        android:text="СБ"
+        android:id="@+id/checkBoxSat" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/checkBoxSat"
+        
+        android:text="ВС"
+        android:id="@+id/checkBoxSun" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/checkBoxSun">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Поиск от"
+            android:layout_marginTop="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="HH"
+                android:ems="10"
+                android:id="@+id/minH"/>
+
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="MM"
+                android:ems="10"
+                android:id="@+id/minM"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Поиск до"
+            android:layout_marginTop="24dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="HH"
+                android:ems="10"
+                android:id="@+id/maxH"/>
+
+            <EditText
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="MM"
+                android:ems="10"
+                android:id="@+id/maxM"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
