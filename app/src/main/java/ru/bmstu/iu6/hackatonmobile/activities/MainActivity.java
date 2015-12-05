@@ -197,49 +197,49 @@ public class MainActivity extends AppCompatActivity
                                 BeaconDispatcher beaconDispatcher = new BeaconDispatcher(getBaseContext());
                                 beaconDispatcher.dispatchBeacon(UUID, Major, Minor);
                             }
-                            Context context = getApplicationContext();
-                            String bigText = "Большая строка большая строка " +
-                                    "Большая строка большая строка " +
-                                    "Большая строка большая строка " +
-                                    "Большая строка большая строка " +
-                                    "Большая строка большая строка " +
-                                    "Большая строка большая строка " +
-                                    "Большая строка большая строка " +
-                                    "Большая строка большая строка " +
-                                    "Большая строка большая строка ";
-
-                            Intent notificationIntent = new Intent(context, MainActivity.class);
-                            PendingIntent contentIntent = PendingIntent.getActivity(context,
-                                    0, notificationIntent,
-                                    PendingIntent.FLAG_CANCEL_CURRENT);
-
-                            Resources res = context.getResources();
-                            Notification.Builder builder = new Notification.Builder(context);
-
-                            builder.setContentIntent(contentIntent)
-                                    .setSmallIcon(R.drawable.ic_menu_manage)
-                                            // большая картинка
-                                    .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_menu_manage))
-                                            //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
-                                    .setTicker("Последнее китайское предупреждение!")
-                                    .setWhen(System.currentTimeMillis())
-                                    .setDefaults(Notification.DEFAULT_ALL)
-
-                                    .setAutoCancel(true)
-                                            //.setContentTitle(res.getString(R.string.notifytitle)) // Заголовок уведомления
-                                    .setContentTitle("Напоминание")
-                                            //.setContentText(res.getString(R.string.notifytext))
-                                    .setContentText("Пора покормить кота"); // Текст уведомления
-
-                            // Notification notification = builder.getNotification(); // до API 16
-//                            Notification notification = builder.build();
-                            Notification notification = new Notification.BigTextStyle(builder)
-                                    .bigText(bigText).build();
-
-
-                            NotificationManager notificationManager = (NotificationManager) context
-                                    .getSystemService(Context.NOTIFICATION_SERVICE);
-                            notificationManager.notify(NOTIFY_ID, notification);
+//                            Context context = getApplicationContext();
+//                            String bigText = "Большая строка большая строка " +
+//                                    "Большая строка большая строка " +
+//                                    "Большая строка большая строка " +
+//                                    "Большая строка большая строка " +
+//                                    "Большая строка большая строка " +
+//                                    "Большая строка большая строка " +
+//                                    "Большая строка большая строка " +
+//                                    "Большая строка большая строка " +
+//                                    "Большая строка большая строка ";
+//
+//                            Intent notificationIntent = new Intent(context, MainActivity.class);
+//                            PendingIntent contentIntent = PendingIntent.getActivity(context,
+//                                    0, notificationIntent,
+//                                    PendingIntent.FLAG_CANCEL_CURRENT);
+//
+//                            Resources res = context.getResources();
+//                            Notification.Builder builder = new Notification.Builder(context);
+//
+//                            builder.setContentIntent(contentIntent)
+//                                    .setSmallIcon(R.drawable.ic_menu_manage)
+//                                            // большая картинка
+//                                    .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_menu_manage))
+//                                            //.setTicker(res.getString(R.string.warning)) // текст в строке состояния
+//                                    .setTicker("Последнее китайское предупреждение!")
+//                                    .setWhen(System.currentTimeMillis())
+//                                    .setDefaults(Notification.DEFAULT_ALL)
+//
+//                                    .setAutoCancel(true)
+//                                            //.setContentTitle(res.getString(R.string.notifytitle)) // Заголовок уведомления
+//                                    .setContentTitle("Напоминание")
+//                                            //.setContentText(res.getString(R.string.notifytext))
+//                                    .setContentText("Пора покормить кота"); // Текст уведомления
+//
+//                            // Notification notification = builder.getNotification(); // до API 16
+////                            Notification notification = builder.build();
+//                            Notification notification = new Notification.BigTextStyle(builder)
+//                                    .bigText(bigText).build();
+//
+//
+//                            NotificationManager notificationManager = (NotificationManager) context
+//                                    .getSystemService(Context.NOTIFICATION_SERVICE);
+//                            notificationManager.notify(NOTIFY_ID, notification);
 
                         }
                     }

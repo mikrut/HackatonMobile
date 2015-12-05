@@ -128,7 +128,7 @@ public class BeaconDispatcher {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                        .setSmallIcon(android.R.drawable.ic_dialog_info)
                         .setContentTitle(foundHeaders[model.getType()])
                         .setContentText(model.getCategory());
 
@@ -142,7 +142,7 @@ public class BeaconDispatcher {
             if (result.has("alert") && result.getBoolean("alert")) {
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(context)
-                                .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                                .setSmallIcon(android.R.drawable.ic_dialog_alert)
                                 .setContentTitle("Поблизости обнаружен пропавший человек!")
                                 .setContentText("Свяжитесь со службой LisaAlert.");
 
