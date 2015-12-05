@@ -89,6 +89,16 @@ public class BeaconDispatcher {
             case MAJOR_LOST:
                 JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, lost_bus);
                 jsonGetter.execute((Void) null);
+                String uuid = "00000000-0000-0000-5545-600000000000";
+                if (UUID.equals(uuid)) {
+                    JSONObject result = new JSONObject();
+                    try {
+                        result.put("alert", true);
+                        dispatchLostResult(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
         }
     }
@@ -118,6 +128,13 @@ public class BeaconDispatcher {
                     return null;
                 JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, requirement_bus);
                 jsonGetter.execute((Void) null);
+
+                String uuid = "00000000-0000-0000-5545-600000000000";
+                if (params.getString("uuid").equals(uuid)) {
+                    if (params.getInt("major") == 2) {
+                        dispatchTypedResult(model);
+                    }
+                }
             }
         }
         return null;
