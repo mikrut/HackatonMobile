@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import ru.bmstu.iu6.hackatonmobile.FoodEditActivity;
+import ru.bmstu.iu6.hackatonmobile.MetroActivity;
 import ru.bmstu.iu6.hackatonmobile.R;
 
 public class CategoryActivity extends AppCompatActivity {
@@ -21,7 +23,7 @@ public class CategoryActivity extends AppCompatActivity {
         final ListView listView = (ListView) findViewById(R.id.listViewCategory);
 
         String[] values = new String[] {
-                "Рестораны", "Магазины", "Потерянные люди"
+                "Рестораны", "Магазины", "Метро"
         };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -38,15 +40,15 @@ public class CategoryActivity extends AppCompatActivity {
 
                 switch (strText) {
                     case "Рестораны" : {
-                        startActivity(new Intent(listView.getContext(), MainActivity.class));
+                        startActivity(new Intent(listView.getContext(), FoodEditActivity.class));
                         break;
                     }
                     case "Магазины" : {
-                        startActivity(new Intent(listView.getContext(), MainActivity.class));
+                        startActivity(new Intent(listView.getContext(), FoodEditActivity.class));
                         break;
                     }
-                    case "Потерянные люди" : {
-                        startActivity(new Intent(listView.getContext(), MainActivity.class));
+                    case "Метро" : {
+                        startActivity(new Intent(listView.getContext(), MetroActivity.class));
                         break;
                     }
                     default : {
