@@ -83,7 +83,7 @@ public class BeaconDispatcher {
                 break;
             case MAJOR_LOST:
                 JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, lost_bus);
-                jsonGetter.doInBackground(null);
+                jsonGetter.execute((Void) null);
                 break;
         }
     }
@@ -111,7 +111,7 @@ public class BeaconDispatcher {
                 if(finish_flag)
                     return null;
                 JSONGetter jsonGetter = new JSONGetter("/goods/spot", method, params, requirement_bus);
-                jsonGetter.doInBackground(null);
+                jsonGetter.execute((Void) null);
             }
         }
         return null;
