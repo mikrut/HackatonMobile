@@ -16,6 +16,7 @@
         <activity
             android:name=".RequirementEditActivity"
             android:label="@string/title_activity_food_edit"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".activities.CategoryActivity" />
         <activity
@@ -28,7 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CategoryActivity"></activity>
     </application>
 
 </manifest>
